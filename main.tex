@@ -1,57 +1,100 @@
 \documentclass[12pt,a4paper]{article}
 
-% 中文支持
-\usepackage{ctex}
-\usepackage{fontspec}
+% ----------------------
+% 基础文档配置
+% ----------------------
+\usepackage{ctex}                 % 中文支持核心包
+\usepackage{fontspec}             % 字体设置扩展包
+\usepackage{geometry}             % 页面布局设置
+\usepackage{setspace}             % 行距设置
+\usepackage{graphicx}             % 图片插入
+\usepackage{caption}              % 图表标题设置
+\usepackage{subcaption}           % 子图表支持
+\usepackage{float}                % 图表浮动控制
+\usepackage{amsmath,amssymb}      % 数学公式支持
+\usepackage{fancyhdr}             % 页眉页脚定制
+\usepackage{tocloft}              % 目录格式设置
+\usepackage{natbib}               % 参考文献引用
+\usepackage{titlesec}             % 章节标题格式设置
+\usepackage{etoolbox}             % 工具包（备用）
 
-% 版式设置
-\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,bindingoffset=0.5cm]{geometry}
-\usepackage{setspace}
-\linespread{1.25}  % 1.25 倍行距
+% ----------------------
+% 字体全局设置
+% ----------------------
+\setmainfont{Times New Roman}     % 英文主字体
+\setsansfont{Arial}               % 无衬线英文字体
+\setmonofont{Courier New}         % 等宽英文字体
+\newfontfamily\SimSun{SimSun}       % 定义宋体命令
+\newfontfamily\KaiTi{KaiTi}         % 定义楷体命令
 
-% 图表支持
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{float}
+% ----------------------
+% 页面布局设置
+% ----------------------
+\geometry{
+  left=2.5cm,
+  right=2.5cm,
+  top=2.5cm,
+  bottom=2.5cm,
+  bindingoffset=0.5cm
+}
+\linespread{1.25}                  % 1.25倍行距
 
-% 数学公式
-\usepackage{amsmath, amssymb}
-
-% 页眉页脚
-\usepackage{fancyhdr}
+% ----------------------
+% 页眉页脚设置
+% ----------------------
 \pagestyle{fancy}
 \fancyhf{}
 \fancyfoot[C]{\thepage}
 
-% 目录
-\usepackage{tocloft}
+% ----------------------
+% 目录格式设置
+% ----------------------
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\contentsname}{目录} % 目录标题汉化
 
-% 引用
-\usepackage[super]{natbib}
-
-% 设置标题样式
-\usepackage{titlesec}
+% ----------------------
+% 章节标题格式
+% ----------------------
 \titleformat{\section}{\zihao{-4}\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\zihao{-4}}{\thesubsection}{1em}{}
 
-% 设置图表标题格式
-\captionsetup{font={small}, labelfont=bf, labelsep=period}
+% ----------------------
+% 图表标题格式
+% ----------------------
+\captionsetup{
+  font={small},
+  labelfont=bf,
+  labelsep=period
+}
 
-% 中文宋体字体（默认CTeX已设置）
-% 英文 Times New Roman
-\setmainfont{Times New Roman}
-
-% 封面页（自定义）
+% ----------------------
+% 文档开始
+% ----------------------
 \begin{document}
+
+% ----------------------
+% 封面页（严格按格式要求）
+% ----------------------
 \begin{titlepage}
 \centering
-\vspace*{2cm}
-{\zihao{2} 毕 业 论 文 \par}
-\vspace{2cm}
-{\zihao{3} \bfseries 基于微服务的健康管理平台的研究与设计 \par}
-\vspace{4cm}
+
+% 珠海科技学院（宋体，初号，居中；段前空小四号一行，段后空初号一行）
+\vspace{\baselineskip}            % 段前空小四号一行（12pt）
+{\SimSun\zihao{0} 珠海科技学院 \par}
+\vspace{\baselineskip}            % 段后空初号一行（14.85pt）
+
+
+% 毕业论文（宋体，初号，加粗，居中，字间空一格）
+\vspace{1cm}                     % 额外间隔
+{\SimSun\zihao{0}\bfseries 毕\ 业\ 论\ 文 \par}
+\vspace{1cm}                     % 段后间隔
+
+% 论文标题（楷体，小一，加粗，居中；段前空初号一行，段后空小一四行）
+\vspace{\baselineskip}            % 段前空初号一行
+{\kaishu\zihao{-1}\bfseries 基于微服务的健康管理平台的研究与设计 \par}
+\vspace{4\baselineskip}           % 段后空小一四行
+
+% 作者信息（左对齐，小四字体）
 \begin{flushleft}
 {\zihao{4}
 学院：XXX学院 \par
@@ -62,36 +105,59 @@
 完成日期：2025年6月 \par
 }
 \end{flushleft}
+
 \vfill
 （本页请勿编页码）
 \end{titlepage}
 
-% 摘要
+% ----------------------
+% 摘要部分
+% ----------------------
 \input{sections/abstract.tex}
 
-% 英文摘要
+% ----------------------
+% 英文摘要部分
+% ----------------------
 \input{sections/abstract-en.tex}
 
-% 目录
+% ----------------------
+% 目录生成
+% ----------------------
 \clearpage
 \pagenumbering{Roman}
 \tableofcontents
 \clearpage
 \pagenumbering{arabic}
 
-% 正文各章节
+% ----------------------
+% 正文章节（示例引用）
+% ----------------------
 \input{sections/chapter1.tex}
 % \input{sections/chapter2.tex}
 % \input{sections/chapter3.tex}
-% ...
+% \input{sections/chapter4.tex}
+% \input{sections/chapter5.tex}
 
-% 参考文献
-\bibliographystyle{unsrt}
-\bibliography{ref}
+% ----------------------
+% 参考文献部分(暂时注释下面三行)
+% ----------------------
+% \clearpage
+% \bibliographystyle{unsrt}
+% \bibliography{ref}
 
-% 致谢（也可拆出独立 tex 文件）
+% ----------------------
+% 致谢部分
+% ----------------------
 \clearpage
 \section*{致谢}
 \addcontentsline{toc}{section}{致谢}
-感谢指导老师 XXX 的悉心指导……
+感谢指导老师 XXX 的悉心指导，感谢家人的支持与理解。在论文撰写过程中，还得到了同学们的热心帮助，在此一并表示诚挚的谢意。
+
+% ----------------------
+% 附录部分（可选）
+% ----------------------
+% \clearpage
+% \appendix
+% \input{sections/appendix.tex}
+
 \end{document}
