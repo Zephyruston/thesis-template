@@ -1,0 +1,97 @@
+\documentclass[12pt,a4paper]{article}
+
+% 中文支持
+\usepackage{ctex}
+\usepackage{fontspec}
+
+% 版式设置
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,bindingoffset=0.5cm]{geometry}
+\usepackage{setspace}
+\linespread{1.25}  % 1.25 倍行距
+
+% 图表支持
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+% 数学公式
+\usepackage{amsmath, amssymb}
+
+% 页眉页脚
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+
+% 目录
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% 引用
+\usepackage[super]{natbib}
+
+% 设置标题样式
+\usepackage{titlesec}
+\titleformat{\section}{\zihao{-4}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\zihao{-4}}{\thesubsection}{1em}{}
+
+% 设置图表标题格式
+\captionsetup{font={small}, labelfont=bf, labelsep=period}
+
+% 中文宋体字体（默认CTeX已设置）
+% 英文 Times New Roman
+\setmainfont{Times New Roman}
+
+% 封面页（自定义）
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\zihao{2} 毕 业 论 文 \par}
+\vspace{2cm}
+{\zihao{3} \bfseries 基于微服务的健康管理平台的研究与设计 \par}
+\vspace{4cm}
+\begin{flushleft}
+{\zihao{4}
+学院：XXX学院 \par
+专业名称：XXX \par
+学生姓名：XXX \par
+学号：XXXXXXXXX \par
+指导教师姓名职称：XXX XXX \par
+完成日期：2025年6月 \par
+}
+\end{flushleft}
+\vfill
+（本页请勿编页码）
+\end{titlepage}
+
+% 摘要
+\input{sections/abstract.tex}
+
+% 英文摘要
+\input{sections/abstract-en.tex}
+
+% 目录
+\clearpage
+\pagenumbering{Roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% 正文各章节
+\input{sections/chapter1.tex}
+% \input{sections/chapter2.tex}
+% \input{sections/chapter3.tex}
+% ...
+
+% 参考文献
+\bibliographystyle{unsrt}
+\bibliography{ref}
+
+% 致谢（也可拆出独立 tex 文件）
+\clearpage
+\section*{致谢}
+\addcontentsline{toc}{section}{致谢}
+感谢指导老师 XXX 的悉心指导……
+\end{document}

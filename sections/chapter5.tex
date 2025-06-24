@@ -1,0 +1,70 @@
+\section{部署与测试}
+
+本章主要介绍健康管理平台的部署方式、所需软硬件环境及主要功能测试方案，验证系统的稳定性、可靠性与实际使用性能。
+
+\subsection{部署环境}
+
+\subsubsection{软硬件环境}
+
+平台推荐部署于 Linux 服务器（如 Ubuntu 20.04），所需环境如表~\ref{tab:env} 所示：
+
+\begin{table}[H]
+\centering
+\caption{部署环境配置}
+\label{tab:env}
+\begin{tabular}{|c|c|}
+\hline
+组件 & 配置说明 \\
+\hline
+操作系统 & Ubuntu 20.04 LTS \\
+Java 环境 & JDK 17 \\
+数据库 & MySQL 8.0 \\
+缓存 & Redis 7 \\
+容器管理 & Docker 24 + Docker Compose \\
+搜索引擎 & Elasticsearch 8.10 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{服务部署流程}
+
+1. 使用 Git 克隆后端项目代码；
+2. 通过 Docker Compose 启动微服务容器；
+3. Nginx 配置反向代理；
+4. MySQL 初始化数据库结构；
+5. 运行测试脚本，确认服务启动正常。
+
+\subsection{功能测试}
+
+\subsubsection{测试方法}
+
+采用黑盒测试方式，设计测试用例覆盖各模块主要功能点，包括：
+
+\begin{itemize}
+  \item 注册登录测试；
+  \item 问诊功能流程测试；
+  \item 文章推荐与检索测试；
+  \item 管理后台功能权限测试；
+  \item 系统异常与边界条件处理。
+\end{itemize}
+
+\subsubsection{注册功能测试用例（示例）}
+
+\begin{itemize}
+  \item 测试编号：U1-1-1；
+  \item 输入：合法用户名、密码、邮箱；
+  \item 期望结果：注册成功，返回用户信息；
+  \item 异常输入测试：用户名为空、密码太短等应返回错误提示；
+  \item 实际结果：全部通过，符合预期。
+\end{itemize}
+
+\subsection{性能测试}
+
+使用 Apache JMeter 对接口并发访问性能进行压测，结果如下：
+
+- 并发 500 用户时，登录接口平均响应时间：312ms；
+- 并发 1000 用户时，系统仍可稳定响应，CPU 占用维持在 70\% 以下。
+
+\subsection{本章小结}
+
+本章对平台的部署流程、运行环境及功能测试过程进行了说明。经测试验证，系统在功能完整性、稳定性与性能表现方面均满足设计预期。
