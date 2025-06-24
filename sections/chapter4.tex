@@ -1,0 +1,74 @@
+\section{设计与实现}
+
+本章将介绍健康管理平台的系统设计与实现过程，包括系统架构设计、数据库设计、主要功能模块的实现等内容。该平台采用分布式微服务架构，从整体到局部进行了分层设计，以实现系统的高内聚、低耦合、高扩展性。
+
+\subsection{系统总体架构设计}
+
+平台采用三层结构：接入层、业务层、数据层。各层之间职责清晰，协同工作如图~\ref{fig:arch} 所示。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig/arch.pdf}
+\caption{平台整体架构图}
+\label{fig:arch}
+\end{figure}
+
+\begin{itemize}
+  \item 接入层：主要包括网关（Gateway）和认证服务，用于统一入口控制、用户认证与权限管理；
+  \item 业务层：封装具体业务模块，如用户服务、问诊服务、内容服务等；
+  \item 数据层：包括数据库服务、缓存服务（Redis）、文件服务等。
+\end{itemize}
+
+\subsection{数据库设计}
+
+平台核心数据通过 MySQL 存储，缓存使用 Redis，搜索引擎使用 Elasticsearch。以“用户表”为例，其逻辑结构如表~\ref{tab:user} 所示。
+
+\begin{table}[H]
+\centering
+\caption{用户表结构设计}
+\label{tab:user}
+\begin{tabular}{|c|c|c|c|l|}
+\hline
+字段名 & 类型 & 长度 & 主键 & 说明 \\
+\hline
+user\_id & BIGINT & 20 & 是 & 用户唯一标识 \\
+username & VARCHAR & 50 & 否 & 用户名 \\
+password & VARCHAR & 100 & 否 & 加密后的密码 \\
+email & VARCHAR & 100 & 否 & 邮箱地址 \\
+created\_at & DATETIME & - & 否 & 注册时间 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{主要模块实现}
+
+\subsubsection{用户管理模块}
+
+该模块提供用户注册、登录、信息修改、身份验证等功能，支持基于 JWT 的 Token 身份认证机制。密码使用 Bcrypt 加密存储。
+
+\subsubsection{在线问诊模块}
+
+该模块实现用户与医生的图文问诊交流，采用 WebSocket 实时通信方式。后端管理用户问诊订单的生成、处理与状态追踪，并支持历史问诊记录查询。
+
+\subsubsection{内容服务模块}
+
+管理员可通过后台发布健康文章资讯，用户可浏览并收藏文章。系统支持关键词搜索，并通过 Elasticsearch 实现模糊匹配和排序推荐。
+
+\subsubsection{问卷量表模块}
+
+支持用户填写心理/健康自评问卷，系统根据用户回答计算分数并给出反馈建议。支持历史评测记录的展示与数据可视化。
+
+\subsection{接口示例设计}
+
+以下为一个用户登录接口的示例说明：
+
+\begin{itemize}
+  \item URL：`POST /api/auth/login`
+  \item 参数：`username`, `password`
+  \item 返回：用户基本信息 + JWT Token
+  \item 错误码：401（认证失败）
+\end{itemize}
+
+\subsection{本章小结}
+
+本章详细介绍了平台的系统架构、数据库设计、核心模块的功能与实现方法。通过模块化与服务化设计，平台具备良好的扩展性和维护性，为后续部署与测试提供了基础。
